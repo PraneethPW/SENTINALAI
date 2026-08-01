@@ -1,0 +1,2 @@
+import { ShieldCheck } from 'lucide-react'
+export function ModulePage({title}:{title:string}) { return <div className="mx-auto max-w-3xl"><p className="text-sm text-cyan">SENTINEL WORKSPACE</p><h1 className="mt-1 text-3xl font-semibold">{title}</h1><div className="glass mt-7 rounded-lg p-8"><ShieldCheck className="text-lime"/><h2 className="mt-4 text-xl font-semibold">This area is protected and ready.</h2><p className="mt-2 text-slate-400">Your {title.toLowerCase()} will appear here as SentinelAI collects and verifies new security signals.</p></div></div> }
