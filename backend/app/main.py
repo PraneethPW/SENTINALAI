@@ -17,7 +17,8 @@ async def lifespan(_: FastAPI):
     Base.metadata.create_all(bind=engine)
     yield
 app = FastAPI(title="SentinelAI API", version="0.1.0", lifespan=lifespan)
-app.add_middleware(CORSMiddleware, allow_origins=get_settings().cors_origins.split(","), allow_credentials=True, allow_methods=["*"], allow_headers=["*"])
+allowed_origins = [origin.strip().rstrip("/") for origin in get_settings().cors_origins.split(",") if origin.strip()]
+app.add_middleware(CORSMiddleware, allow_origins=allowed_origins, allow_credentials=True, allow_methods=["*"], allow_headers=["*"])
 app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
 @app.exception_handler(Exception)
 async def unhandled(_: Request, exc: Exception):
