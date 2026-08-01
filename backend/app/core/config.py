@@ -7,7 +7,7 @@ class Settings(BaseSettings):
     jwt_secret: str = "development-only-change-me"
     openrouter_api_key: str | None = None
     openrouter_model: str = "openai/gpt-4.1-mini"
-    cors_origins: str = "http://localhost:5173,http://127.0.0.1:5173,http://localhost:5174,http://127.0.0.1:5174"
+    cors_origins: str = "http://localhost:5173,http://127.0.0.1:5173,http://localhost:5174,http://127.0.0.1:5174,https://localhost,capacitor://localhost"
 
 @lru_cache
 def get_settings() -> Settings:

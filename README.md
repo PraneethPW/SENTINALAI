@@ -10,6 +10,10 @@ AI-Powered Intelligent Device Guardian. SentinelAI combines device telemetry, ex
 
 For local development, run `uvicorn app.main:app --reload` from `backend` and `npm install && npm run dev` from `frontend`.
 
+## Android wrapper
+
+The React client is packaged for Android with Capacitor. Before syncing for the Android emulator, set `VITE_API_URL` to `http://10.0.2.2:8001/api/v1` and `VITE_WS_URL` to `ws://10.0.2.2:8001/api/v1/ws`.
+
 ## Architecture
 
 - `frontend` - Vite React TypeScript client with Tailwind, motion, charts, and Three.js.
