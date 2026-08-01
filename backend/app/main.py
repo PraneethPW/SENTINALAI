@@ -1,6 +1,7 @@
 import logging
 from contextlib import asynccontextmanager
 from datetime import datetime, timezone
+from pathlib import Path
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
@@ -19,7 +20,11 @@ async def lifespan(_: FastAPI):
 app = FastAPI(title="SentinelAI API", version="0.1.0", lifespan=lifespan)
 allowed_origins = [origin.strip().rstrip("/") for origin in get_settings().cors_origins.split(",") if origin.strip()]
 app.add_middleware(CORSMiddleware, allow_origins=allowed_origins, allow_credentials=True, allow_methods=["*"], allow_headers=["*"])
-app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
+# A Git checkout does not retain empty directories. Create this runtime storage
+# before StaticFiles validates its path, including on Railway's clean container.
+uploads_dir = Path(__file__).resolve().parent.parent / "uploads"
+uploads_dir.mkdir(parents=True, exist_ok=True)
+app.mount("/uploads", StaticFiles(directory=str(uploads_dir)), name="uploads")
 @app.exception_handler(Exception)
 async def unhandled(_: Request, exc: Exception):
     logging.exception("Unhandled API error", exc_info=exc)
