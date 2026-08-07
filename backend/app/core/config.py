@@ -7,7 +7,8 @@ class Settings(BaseSettings):
     postgres_url: str = Field(default="sqlite:///./sentinelai.db", validation_alias=AliasChoices("POSTGRES_URL", "DATABASE_URL"))
     jwt_secret: str = "development-only-change-me"
     openrouter_api_key: str | None = None
-    openrouter_model: str = "openai/gpt-4.1-mini"
+    # `openrouter/free` selects an available zero-cost text model.
+    openrouter_model: str = "openrouter/free"
     cors_origins: str = "http://localhost:5173,http://127.0.0.1:5173,http://localhost:5174,http://127.0.0.1:5174,https://localhost,capacitor://localhost"
 
 @lru_cache
