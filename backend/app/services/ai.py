@@ -31,7 +31,9 @@ class AIService:
         }
 
         try:
-            async with httpx.AsyncClient(timeout=httpx.Timeout(30.0, connect=10.0)) as client:
+            # Free providers can be busy. Return local guidance promptly instead
+            # of making the live-protection screen appear unresponsive.
+            async with httpx.AsyncClient(timeout=httpx.Timeout(12.0, connect=5.0)) as client:
                 response = await client.post("https://openrouter.ai/api/v1/chat/completions", json=payload, headers=headers)
                 response.raise_for_status()
                 answer = response.json()["choices"][0]["message"]["content"].strip()
